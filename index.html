@@ -10,10 +10,18 @@
       href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap"
       rel="stylesheet"
     />
-    <title>Document</title>
+    <title>Pokedex</title>
   </head>
   <body>
+    <h1 id="main-title">Pokemon</h1>
+    <div class="search-container">
+      <p>¡Busca tu pokemon!</p>
+      <div class="search-box">
+        <input id="search-input" type="text" placeholder="Ingresa el nombre">
+        <button id="search-btn">Buscar</button>
+      </div>
+    </div>
     <div id="render"></div>
-    <script src="index.js"></script>
+    <script type="module" src="index.js"></script>
   </body>
 </html>
