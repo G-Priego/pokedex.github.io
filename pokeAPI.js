@@ -1,3 +1,5 @@
+import { typeToSpanish } from "./extras.js";
+
 export const baseURL = "https://pokeapi.co/api/v2/";
 
 export async function obtenerPokemon(nombre) {
@@ -12,7 +14,7 @@ export async function obtenerPokemon(nombre) {
         img: pokemon.sprites.front_default, // Imagen del pokemon
         attack: pokemon.stats.find((stat) => stat.stat.name === "attack").base_stat, // Ataque base del Pokémon
         base_experience: pokemon.base_experience, // Experiencia base del Pokémon
-        type: pokemon.types.map((type) => type.type.name),
+        type: typeToSpanish(pokemon.types.map((type) => type.type.name)),
         };
     } catch (error) {
         throw new Error('Error fetching Pokemon info:', error);
@@ -26,7 +28,7 @@ export function crearCarta(pokemon) {
   article.innerHTML = `
     <h3>${pokemon.name}</h3>
     <img src="${pokemon.img}" alt="">
-    <p>Tipo: ${pokemon.type}</p>
+    <p>${pokemon.type}</p>
     `;
   const openBtn = document.createElement("button");
   openBtn.textContent = "Mostrar info";
@@ -65,5 +67,6 @@ export async function obtenerListado() {
   for (let index = 0; index < listadoPokemons.results.length; index++) {
     const pokemon = await obtenerPokemon(listadoPokemons.results[index].name);
     crearCarta(pokemon);
+    console.log(typeToSpanish(pokemon.type));
   }
 }
