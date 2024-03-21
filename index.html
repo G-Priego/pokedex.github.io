@@ -17,11 +17,15 @@
     <div class="search-container">
       <p>¡Busca tu pokemon!</p>
       <div class="search-box">
-        <input id="search-input" type="text" placeholder="Ingresa el nombre">
+        <input id="search-input" type="text" placeholder="Ingresa el nombre o id">
         <button id="search-btn">Buscar</button>
       </div>
     </div>
     <div id="render"></div>
+    <nav class="pagination">
+      <button id="previous-btn" class="page-link" tabindex="-1">Anterior</button>        
+      <button id="next-btn" class="page-link" >Siguiente</button>
+    </nav>
     <script type="module" src="index.js"></script>
   </body>
 </html>

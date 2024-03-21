@@ -1,3 +1,4 @@
+// funcion para traducir los tipos de pokemon al español
 export function typeToSpanish(array) {
     const types = {
         "steel": "Acero",

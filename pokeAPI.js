@@ -2,9 +2,9 @@ import { typeToSpanish } from "./extras.js";
 
 export const baseURL = "https://pokeapi.co/api/v2/";
 
-export async function obtenerPokemon(nombre) {
+export async function obtenerPokemon(id) {
     try {
-        let respuestaApi = await fetch(`${baseURL}pokemon/${nombre}`);
+        let respuestaApi = await fetch(`${baseURL}pokemon/${id}`);
         let pokemon = await respuestaApi.json();
         return {
         name: pokemon.name,
@@ -19,7 +19,7 @@ export async function obtenerPokemon(nombre) {
     } catch (error) {
         throw new Error('Error fetching Pokemon info:', error);
     }
-  }
+}
 
 export function crearCarta(pokemon) {
   let article = document.createElement("article");
@@ -61,12 +61,9 @@ export function crearCarta(pokemon) {
   document.getElementById("render").appendChild(article);
 }
 
-export async function obtenerListado() {
-  let respuestaApi = await fetch(`${baseURL}pokemon`);
-  let listadoPokemons = await respuestaApi.json();
-  for (let index = 0; index < listadoPokemons.results.length; index++) {
-    const pokemon = await obtenerPokemon(listadoPokemons.results[index].name);
+export async function obtenerListado(offset, limit) {
+  for (let index = offset; index <= limit + offset; index++) {
+    const pokemon = await obtenerPokemon(index);
     crearCarta(pokemon);
-    console.log(typeToSpanish(pokemon.type));
   }
 }

@@ -128,3 +128,8 @@ button{
   }
   }
 }
+
+.pagination button {
+  background-color: red;
+  color: white;
+}
