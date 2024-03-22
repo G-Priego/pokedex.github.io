@@ -21,20 +21,25 @@ mainTitle.addEventListener("click", ()=>{
   obtenerListado(1, limit);
 })
 
-const previous = document.getElementById("previous-btn");
-previous.addEventListener("click", ()=>{
+const previous = document.querySelectorAll(".previous-btn");
+for (let index = 0; index < previous.length; index++) {
+  previous[index].addEventListener("click", ()=>{
   if (offset!=1){
     offset -= 21;
     render.innerHTML = "";
     obtenerListado(offset, limit);
   }
 })
+};
 
-const next = document.getElementById("next-btn");
-next.addEventListener("click", () =>{
+
+const next = document.querySelectorAll(".next-btn");
+for (let index = 0; index < next.length; index++) {
+  next[index].addEventListener("click", () =>{
   offset += 21;
   render.innerHTML = "";
-  obtenerListado(offset, limit)
+  obtenerListado(offset, limit);
 })
+}
 
 obtenerListado(offset, limit);

@@ -22,16 +22,21 @@ export async function obtenerPokemon(id) {
 }
 
 export function crearCarta(pokemon) {
+  let types = pokemon.type.map((type) =>
+    `<p class="${type} type">${type}</p>`
+  );
+  types = types.join("");
+  
   let article = document.createElement("article");
   article.classList.add("carta");
-  //article.style.backgroundColor = getRandomColor();
   article.innerHTML = `
     <h3>${pokemon.name}</h3>
-    <img src="${pokemon.img}" alt="">
-    <p>${pokemon.type}</p>
+    <img src="${pokemon.img}" alt="${pokemon.name}">
+    <div class="pokemon-types">${types}</div>    
     `;
   const openBtn = document.createElement("button");
-  openBtn.textContent = "Mostrar info";
+  openBtn.classList.add("info-btn")
+  openBtn.innerHTML = "&#43;info";
   article.appendChild(openBtn)
 
   openBtn.addEventListener("click", () => {
@@ -42,8 +47,8 @@ export function crearCarta(pokemon) {
     
     <ul>
         <li>ID: ${pokemon.id}</li> 
-        <li>Altura: ${pokemon.height}</li>
-        <li>Peso: ${pokemon.weight}</li>
+        <li>Altura: ${pokemon.height} m</li>
+        <li>Peso: ${pokemon.weight} kg</li>
         <li>Ataque: ${pokemon.attack}</li>
         <li>Experiencia base: ${pokemon.base_experience}</li>
     </ul>  

@@ -13,18 +13,26 @@
     <title>Pokedex</title>
   </head>
   <body>
-    <h1 id="main-title">Pokemon</h1>
+    <h1 id="main-title">Pokédex</h1>
     <div class="search-container">
       <p>¡Busca tu pokemon!</p>
       <div class="search-box">
         <input id="search-input" type="text" placeholder="Ingresa el nombre o id">
-        <button id="search-btn">Buscar</button>
+        <button id="search-btn">&#128270;Buscar</button>
       </div>
     </div>
+    <nav class="pagination">
+      <div class="pagination-up">
+        <button class="previous-btn" >&#129184;</button>        
+        <button class="next-btn">&#129185;</button>
+      </div>
+    </nav>
     <div id="render"></div>
     <nav class="pagination">
-      <button id="previous-btn" class="page-link" tabindex="-1">Anterior</button>        
-      <button id="next-btn" class="page-link" >Siguiente</button>
+      <div class="pagination-down">
+        <button class="previous-btn" >&#129184;</button>        
+      <button class="next-btn" >&#129185;</button>
+      </div>      
     </nav>
     <script type="module" src="index.js"></script>
   </body>

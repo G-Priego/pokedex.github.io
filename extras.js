@@ -1,24 +1,24 @@
 // funcion para traducir los tipos de pokemon al español
 export function typeToSpanish(array) {
     const types = {
-        "steel": "Acero",
-        "water": "Agua",
-        "dragon": "Dragón",
-        "electric": "Eléctrico",
-        "fairy": "Hada",
-        "ghost": "Fantasma",
-        "fire": "Fuego",
-        "ice": "Hielo",
-        "bug": "Bicho",
-        "fighting": "Lucha",
-        "normal": "Normal",
-        "rock": "Roca",
-        "grass": "Planta",
-        "psychic": "Psíquico",
-        "dark": "Siniestro",
-        "ground": "Tierra",
-        "poison": "Veneno",
-        "flying": "Volador"
+        "steel": "acero",
+        "water": "agua",
+        "dragon": "dragón",
+        "electric": "eléctrico",
+        "fairy": "hada",
+        "ghost": "fantasma",
+        "fire": "fuego",
+        "ice": "hielo",
+        "bug": "bicho",
+        "fighting": "lucha",
+        "normal": "normal",
+        "rock": "roca",
+        "grass": "planta",
+        "psychic": "psíquico",
+        "dark": "siniestro",
+        "ground": "tierra",
+        "poison": "veneno",
+        "flying": "volador"
     };
     
     for (let index = 0; index < array.length; index++) {
