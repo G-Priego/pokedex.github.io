@@ -1,8 +1,8 @@
-import { obtenerPokemon, crearCarta, obtenerListado } from "./pokeAPI.js";
+import { obtenerPokemon, crearCarta, obtenerListado, showGen } from "./pokeAPI.js";
 
 const render = document.getElementById("render");
 const limit = 20;
-let offset = 1;
+let offset = 1; // para que empiece siempre por el pokemon numero 1
 
 // Buscar y mostrar pokemon especifico
 const searchBtn = document.getElementById("search-btn");
@@ -17,10 +17,10 @@ searchBtn.addEventListener("click", async ()=>{
 // Recargar la home page dando click sobre el titulo
 const mainTitle = document.getElementById("main-title");
 mainTitle.addEventListener("click", ()=>{
-  render.innerHTML = "";  
-  obtenerListado(1, limit);
+  location.reload();
 })
 
+// ver pagina anterior
 const previous = document.querySelectorAll(".previous-btn");
 for (let index = 0; index < previous.length; index++) {
   previous[index].addEventListener("click", ()=>{
@@ -32,7 +32,7 @@ for (let index = 0; index < previous.length; index++) {
 })
 };
 
-
+//ver pagina siguiente
 const next = document.querySelectorAll(".next-btn");
 for (let index = 0; index < next.length; index++) {
   next[index].addEventListener("click", () =>{
@@ -41,5 +41,11 @@ for (let index = 0; index < next.length; index++) {
   obtenerListado(offset, limit);
 })
 }
+
+const select = document.getElementById("gen-select");
+select.addEventListener("change", ()=>{
+  console.log(select.value);
+  showGen(select.value);
+});
 
 obtenerListado(offset, limit);

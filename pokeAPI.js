@@ -72,3 +72,76 @@ export async function obtenerListado(offset, limit) {
     crearCarta(pokemon);
   }
 }
+
+// export function fetchGen(gen){
+//   fetch(`${baseURL}generation/${gen}`)
+//     .then((results) => results.json())
+//     .then((data) => showGen(data.pokemon_species))
+// }
+
+// async function showGen(arrayGen){
+//   document.getElementById("render").innerHTML = "";
+//   arrayGen.forEach(async element => {
+//     const pokemon = await obtenerPokemon(element.name);
+//     crearCarta(pokemon);
+//   });
+// }
+
+export async function showGen(gen){
+  let gensLength = [151, 100, 135, 107, 156, 72, 88, 96, 120];
+  console.log("funcion show gen");
+  const divBtn = document.getElementById("btn-holder");
+  divBtn.innerHTML = "";
+  document.getElementById("render").innerHTML = "";
+  const loadBtn = document.createElement("button");
+  loadBtn.classList.add("render-loadBtn");
+  loadBtn.textContent = "Cargar más";
+  console.log(divBtn);
+  divBtn.appendChild(loadBtn);
+
+  let firstPokemon = 1;
+  let limit = 20;
+
+  console.log(firstPokemon + " " + limit + " " + gen);
+
+  for (let index = 0; index < 9; index++) {
+    if (gen == 1) {
+      console.log(firstPokemon);     
+      //return firstPokemon;
+      break;
+    } else if (index+1 < gen) {
+      console.log(gensLength[index]);
+      firstPokemon += gensLength[index];
+      console.log(firstPokemon);
+    } else {
+      console.log(firstPokemon);
+      //return firstPokemon;
+      break;
+    }
+  }
+
+  let offset = firstPokemon;
+  console.log("offset: ",offset);
+  
+  await obtenerListado(firstPokemon, limit);
+
+  document.getElementById("render").appendChild(divBtn);
+
+  loadBtn.addEventListener("click", ()=>{
+    if (offset + 21 > firstPokemon + (gensLength[gen-1]-1)){
+      console.log("ya no hay mas pokemon de esta generacion");
+    } else if ((offset + 21) + limit > firstPokemon + (gensLength[gen-1]-1)){
+      offset += 21;
+      console.log("nuevo offset: ", offset);
+      limit = (firstPokemon + (gensLength[gen-1]-1)) - offset;
+      console.log("nuevo limit: ", limit);
+      obtenerListado(offset, limit)
+    } else if ((offset + 21) + limit < firstPokemon + (gensLength[gen-1]-1)){
+      offset+=21;
+      console.log("nuevo offset: ", offset);
+      obtenerListado(offset, limit);
+    } else {
+      console.log(`Generacion: ${gen} ${gensLength[gen-1]}/${gensLength[gen-1]}`);
+    }
+  })
+}
