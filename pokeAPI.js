@@ -17,7 +17,9 @@ export async function obtenerPokemon(id) {
         type: typeToSpanish(pokemon.types.map((type) => type.type.name)),
         };
     } catch (error) {
-        throw new Error('Error fetching Pokemon info:', error);
+      location.reload();
+      alert("No se encontró al pokemon :c");
+      throw new Error('Error fetching Pokemon info:', error);
     }
 }
 
