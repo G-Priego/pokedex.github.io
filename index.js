@@ -42,9 +42,15 @@ for (let index = 0; index < next.length; index++) {
 })
 }
 
+//ver por generacion
 const select = document.getElementById("gen-select");
 select.addEventListener("change", ()=>{
-  console.log(select.value);
+  //ocultar los botones de navegación cada vez que se consulta una generacion
+  const navBtns = document.querySelectorAll(".pagination");
+  navBtns.forEach(element => {
+    element.style.display = "none"; 
+  });
+  //llamar a la funcion que muestra la generacion de acuerdo al valor seleccionado
   showGen(select.value);
 });
 

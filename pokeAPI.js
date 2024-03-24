@@ -1,4 +1,4 @@
-import { typeToSpanish } from "./extras.js";
+import { typeToSpanish, getFirst } from "./extras.js";
 
 export const baseURL = "https://pokeapi.co/api/v2/";
 
@@ -22,10 +22,11 @@ export async function obtenerPokemon(id) {
 }
 
 export function crearCarta(pokemon) {
+  // Crear párrafos segun la cantidad de tipos que tiene cada pokemon
   let types = pokemon.type.map((type) =>
     `<p class="${type} type">${type}</p>`
   );
-  types = types.join("");
+  types = types.join(""); // Para que al mostrarlos no aparezca la coma
   
   let article = document.createElement("article");
   article.classList.add("carta");
@@ -73,75 +74,57 @@ export async function obtenerListado(offset, limit) {
   }
 }
 
-// export function fetchGen(gen){
-//   fetch(`${baseURL}generation/${gen}`)
-//     .then((results) => results.json())
-//     .then((data) => showGen(data.pokemon_species))
-// }
-
-// async function showGen(arrayGen){
-//   document.getElementById("render").innerHTML = "";
-//   arrayGen.forEach(async element => {
-//     const pokemon = await obtenerPokemon(element.name);
-//     crearCarta(pokemon);
-//   });
-// }
-
+// Array que guarda la cantidad de pokemones por generacion
+const gensLength = [151, 100, 135, 107, 156, 72, 88, 96, 120];
 export async function showGen(gen){
-  let gensLength = [151, 100, 135, 107, 156, 72, 88, 96, 120];
-  console.log("funcion show gen");
+  //Traer el contenedor del boton de cargar mas y vaciarlo siempre al inicio para que no se acumulen
   const divBtn = document.getElementById("btn-holder");
   divBtn.innerHTML = "";
+  //Vaciar el render cada vez que se llama la funcion
   document.getElementById("render").innerHTML = "";
+  //Crear boton
   const loadBtn = document.createElement("button");
   loadBtn.classList.add("render-loadBtn");
   loadBtn.textContent = "Cargar más";
-  console.log(divBtn);
+  //Agregar el botón recien creado al div btn-holder
   divBtn.appendChild(loadBtn);
 
-  let firstPokemon = 1;
+  // Declarar las variables que se pasarán como argumentos a obtenerListado
   let limit = 20;
-
-  console.log(firstPokemon + " " + limit + " " + gen);
-
-  for (let index = 0; index < 9; index++) {
-    if (gen == 1) {
-      console.log(firstPokemon);     
-      //return firstPokemon;
-      break;
-    } else if (index+1 < gen) {
-      console.log(gensLength[index]);
-      firstPokemon += gensLength[index];
-      console.log(firstPokemon);
-    } else {
-      console.log(firstPokemon);
-      //return firstPokemon;
-      break;
-    }
-  }
-
+  const firstPokemon = getFirst(gen, gensLength);
+  // Variable que se modificará dependiendo del boton cargar mas (si el usuario quiere ver mas pokemon de la generacion)
   let offset = firstPokemon;
-  console.log("offset: ",offset);
+
+  const lastPokemon = firstPokemon + gensLength[gen-1]-1;
   
   await obtenerListado(firstPokemon, limit);
-
+  //Agregar el boton de cargar mas al render solo cuando se hayan cargado los pokemon
   document.getElementById("render").appendChild(divBtn);
 
   loadBtn.addEventListener("click", ()=>{
-    if (offset + 21 > firstPokemon + (gensLength[gen-1]-1)){
-      console.log("ya no hay mas pokemon de esta generacion");
-    } else if ((offset + 21) + limit > firstPokemon + (gensLength[gen-1]-1)){
-      offset += 21;
-      console.log("nuevo offset: ", offset);
-      limit = (firstPokemon + (gensLength[gen-1]-1)) - offset;
-      console.log("nuevo limit: ", limit);
-      obtenerListado(offset, limit)
-    } else if ((offset + 21) + limit < firstPokemon + (gensLength[gen-1]-1)){
-      offset+=21;
-      console.log("nuevo offset: ", offset);
-      obtenerListado(offset, limit);
-    } else {
-      console.log(`Generacion: ${gen} ${gensLength[gen-1]}/${gensLength[gen-1]}`);
+    if (limit != 20){
+      alert("No hay más pokemon");
+      return;
     }
+    offset += 21;
+    limit = Math.min(20, lastPokemon-offset);
+    obtenerListado(offset, limit);
   })
 }
+
+/*Codigo para ver todos los pokemon de una generacion por su nombre
+  Algunos nombres guardados en data.pokemon_species no coinciden con los de la api
+   y tiene el error de no "encontrarlos"
+ export function fetchGen(gen){
+   fetch(`${baseURL}generation/${gen}`)
+     .then((results) => results.json())
+     .then((data) => showGen(data.pokemon_species))
+ }
+
+ async function showGen(arrayGen){
+   document.getElementById("render").innerHTML = "";
+   arrayGen.forEach(async element => {
+    const pokemon = await obtenerPokemon(element.name);
+    crearCarta(pokemon);
+   });
+ } */

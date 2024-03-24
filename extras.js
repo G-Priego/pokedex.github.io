@@ -28,3 +28,19 @@ export function typeToSpanish(array) {
     }
     return array;
 }
+
+export function getFirst(gen, gensLength) {
+    let firstPokemon = 1;
+
+    for (let index = 0; index < 9; index++) {
+        if (gen == 1) {   
+          return firstPokemon;
+        } else if (index+1 < gen) {
+          console.log(gensLength[index]);
+          firstPokemon += gensLength[index];
+          console.log(firstPokemon);
+        } else {
+          return firstPokemon;
+        }
+      }
+}
